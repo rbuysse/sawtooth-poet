@@ -72,28 +72,21 @@ services:
       \""
     stop_signal: SIGKILL
 
-  validator-0:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+  cli:
+    image: hyperledger/sawtooth-shell:bumper-nightly
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-0:/etc/sawtooth/keys
       - sawtooth-db-0:/var/lib/sawtooth
-    expose:
-      - 4004
-      - 8800
-    working_dir: /root
     command: "bash -c \"\
-        cp /project/sawtooth-poet/tests/sawtooth_poet_tests/poet_liveness_data/validator-0.toml /etc/sawtooth/validator.toml && \
         sawadm keygen --force && \
         sawset genesis \
           -k /etc/sawtooth/keys/validator.priv \
           -o config-genesis.batch && \
         sawset proposal create \
           -k /etc/sawtooth/keys/validator.priv \
-          sawtooth.consensus.algorithm=poet \
+          sawtooth.consensus.algorithm.name=PoET \
+          sawtooth.consensus.algorithm.version=0.1 \
           sawtooth.poet.report_public_key_pem=\
           \\\"$$(cat /project/sawtooth-poet/simulator/packaging/simulator_rk_pub.pem)\\\" \
           sawtooth.poet.valid_enclave_measurements=$$(poet enclave measurement) \
@@ -108,17 +101,30 @@ services:
           -o poet-settings.batch && \
         sawadm genesis \
           config-genesis.batch config.batch poet.batch poet-settings.batch && \
+        tail -f /dev/null
+    \""
+
+  validator-0:
+    image: hyperledger/sawtooth-validator:nightly
+    volumes:
+      - $SAWTOOTH_POET:/project/sawtooth-poet
+      - sawtooth-keys-0:/etc/sawtooth/keys
+      - sawtooth-db-0:/var/lib/sawtooth
+    expose:
+      - 4004
+      - 8800
+    working_dir: /root
+    command: "bash -c \"\
+        while [ ! -f /var/lib/sawtooth/genesis.batch ]; do sleep 1; done && \
+        cp /project/sawtooth-poet/tests/sawtooth_poet_tests/poet_liveness_data/validator-0.toml /etc/sawtooth/validator.toml && \
         sawtooth-validator -v
     \""
-    stop_signal: SIGKILL
     environment:
-      PYTHONPATH: "/project/sawtooth-poet/families/block_info"
+      PATH: $PATH:/project/sawtooth-poet/bin
+    stop_signal: SIGKILL
 
   validator-1:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-validator:nightly
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-1:/etc/sawtooth/keys
@@ -131,15 +137,10 @@ services:
         sawadm keygen --force && \
         sawtooth-validator -v
     \""
-    environment:
-      PYTHONPATH: "/project/sawtooth-poet/families/block_info"
     stop_signal: SIGKILL
 
   validator-2:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-validator:nightly
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-2:/etc/sawtooth/keys
@@ -152,15 +153,10 @@ services:
         sawadm keygen --force && \
         sawtooth-validator -v
     \""
-    environment:
-      PYTHONPATH: "/project/sawtooth-poet/families/block_info"
     stop_signal: SIGKILL
 
   validator-3:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-validator:nightly
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-3:/etc/sawtooth/keys
@@ -173,15 +169,10 @@ services:
         sawadm keygen --force && \
         sawtooth-validator -v
     \""
-    environment:
-      PYTHONPATH: "/project/sawtooth-poet/families/block_info"
     stop_signal: SIGKILL
 
   validator-4:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-validator:nightly
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-4:/etc/sawtooth/keys
@@ -194,8 +185,6 @@ services:
         sawadm keygen --force && \
         sawtooth-validator -v
     \""
-    environment:
-      PYTHONPATH: "/project/sawtooth-poet/families/block_info"
     stop_signal: SIGKILL
 
   poet-0:
@@ -259,10 +248,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-0:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-rest-api:nightly
     expose:
       - 4004
       - 8008
@@ -270,10 +256,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-1:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-rest-api:nightly
     expose:
       - 4004
       - 8008
@@ -281,10 +264,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-2:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-rest-api:nightly
     expose:
       - 4004
       - 8008
@@ -292,10 +272,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-3:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-rest-api:nightly
     expose:
       - 4004
       - 8008
@@ -303,10 +280,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-4:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-rest-api:nightly
     expose:
       - 4004
       - 8008
@@ -314,152 +288,105 @@ services:
     stop_signal: SIGKILL
 
   intkey-tp-0:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-intkey-tp-go:nightly
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   intkey-tp-1:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-intkey-tp-go:nightly
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   intkey-tp-2:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-intkey-tp-go:nightly
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   intkey-tp-3:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-intkey-tp-go:nightly
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   intkey-tp-4:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-intkey-tp-go:nightly
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-4:4004
     stop_signal: SIGKILL
 
   smallbank-tp-0:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
-    volumes:
-      - $SAWTOOTH_POET:/project/sawtooth-poet
+    image: hyperledger/sawtooth-smallbank-tp-go:nightly
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   smallbank-tp-1:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-smallbank-tp-go:nightly
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   smallbank-tp-2:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-smallbank-tp-go:nightly
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   smallbank-tp-3:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-smallbank-tp-go:nightly
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   smallbank-tp-4:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-smallbank-tp-go:nightly
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-4:4004
     stop_signal: SIGKILL
 
   settings-tp-0:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-settings-tp:nightly
     expose:
       - 4004
     command: settings-tp -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   settings-tp-1:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-settings-tp:nightly
     expose:
       - 4004
     command: settings-tp -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   settings-tp-2:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-settings-tp:nightly
     expose:
       - 4004
     command: settings-tp -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   settings-tp-3:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-settings-tp:nightly
     expose:
       - 4004
     command: settings-tp -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   settings-tp-4:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-settings-tp:nightly
     expose:
       - 4004
     command: settings-tp -C tcp://validator-4:4004
@@ -536,50 +463,35 @@ services:
     stop_signal: SIGKILL
 
   block-info-tp-0:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-block-info-tp:nightly
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   block-info-tp-1:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-block-info-tp:nightly
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   block-info-tp-2:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-block-info-tp:nightly
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   block-info-tp-3:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-block-info-tp:nightly
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   block-info-tp-4:
-    image: sawtooth-poet-tests:$ISOLATION_ID
-    build:
-      context: .
-      dockerfile: ../Dockerfile
+    image: hyperledger/sawtooth-block-info-tp:nightly
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-4:4004
