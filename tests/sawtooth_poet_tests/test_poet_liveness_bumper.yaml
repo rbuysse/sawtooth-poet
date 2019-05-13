@@ -73,7 +73,7 @@ services:
     stop_signal: SIGKILL
 
   cli:
-    image: hyperledger/sawtooth-shell:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-0:/etc/sawtooth/keys
@@ -105,7 +105,7 @@ services:
     \""
 
   validator-0:
-    image: hyperledger/sawtooth-validator:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-0:/etc/sawtooth/keys
@@ -124,7 +124,7 @@ services:
     stop_signal: SIGKILL
 
   validator-1:
-    image: hyperledger/sawtooth-validator:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-1:/etc/sawtooth/keys
@@ -140,7 +140,7 @@ services:
     stop_signal: SIGKILL
 
   validator-2:
-    image: hyperledger/sawtooth-validator:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-2:/etc/sawtooth/keys
@@ -156,7 +156,7 @@ services:
     stop_signal: SIGKILL
 
   validator-3:
-    image: hyperledger/sawtooth-validator:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-3:/etc/sawtooth/keys
@@ -172,7 +172,7 @@ services:
     stop_signal: SIGKILL
 
   validator-4:
-    image: hyperledger/sawtooth-validator:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-4:/etc/sawtooth/keys
@@ -248,7 +248,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-0:
-    image: hyperledger/sawtooth-rest-api:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
       - 8008
@@ -256,7 +256,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-1:
-    image: hyperledger/sawtooth-rest-api:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
       - 8008
@@ -264,7 +264,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-2:
-    image: hyperledger/sawtooth-rest-api:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
       - 8008
@@ -272,7 +272,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-3:
-    image: hyperledger/sawtooth-rest-api:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
       - 8008
@@ -280,7 +280,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-4:
-    image: hyperledger/sawtooth-rest-api:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
       - 8008
@@ -288,105 +288,105 @@ services:
     stop_signal: SIGKILL
 
   intkey-tp-0:
-    image: hyperledger/sawtooth-intkey-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   intkey-tp-1:
-    image: hyperledger/sawtooth-intkey-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   intkey-tp-2:
-    image: hyperledger/sawtooth-intkey-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   intkey-tp-3:
-    image: hyperledger/sawtooth-intkey-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   intkey-tp-4:
-    image: hyperledger/sawtooth-intkey-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: intkey-tp-go -C tcp://validator-4:4004
     stop_signal: SIGKILL
 
   smallbank-tp-0:
-    image: hyperledger/sawtooth-smallbank-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   smallbank-tp-1:
-    image: hyperledger/sawtooth-smallbank-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   smallbank-tp-2:
-    image: hyperledger/sawtooth-smallbank-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   smallbank-tp-3:
-    image: hyperledger/sawtooth-smallbank-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   smallbank-tp-4:
-    image: hyperledger/sawtooth-smallbank-tp-go:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: smallbank-tp-go -C tcp://validator-4:4004
     stop_signal: SIGKILL
 
   settings-tp-0:
-    image: hyperledger/sawtooth-settings-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: settings-tp -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   settings-tp-1:
-    image: hyperledger/sawtooth-settings-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: settings-tp -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   settings-tp-2:
-    image: hyperledger/sawtooth-settings-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: settings-tp -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   settings-tp-3:
-    image: hyperledger/sawtooth-settings-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: settings-tp -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   settings-tp-4:
-    image: hyperledger/sawtooth-settings-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: settings-tp -C tcp://validator-4:4004
@@ -463,35 +463,35 @@ services:
     stop_signal: SIGKILL
 
   block-info-tp-0:
-    image: hyperledger/sawtooth-block-info-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-0:4004
     stop_signal: SIGKILL
 
   block-info-tp-1:
-    image: hyperledger/sawtooth-block-info-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-1:4004
     stop_signal: SIGKILL
 
   block-info-tp-2:
-    image: hyperledger/sawtooth-block-info-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-2:4004
     stop_signal: SIGKILL
 
   block-info-tp-3:
-    image: hyperledger/sawtooth-block-info-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-3:4004
     stop_signal: SIGKILL
 
   block-info-tp-4:
-    image: hyperledger/sawtooth-block-info-tp:bumper-nightly
+    image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     expose:
       - 4004
     command: block-info-tp -C tcp://validator-4:4004
