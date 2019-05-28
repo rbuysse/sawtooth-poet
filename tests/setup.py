@@ -18,10 +18,24 @@ from __future__ import print_function
 import os
 import subprocess
 
+from pathlib import Path
 from setuptools import setup, find_packages
 
 
 data_files = []
+
+def add_data_files(package_dir, search_dir):
+    if os.path.exists(search_dir):
+        for root, dirs, files in os.walk(search_dir):
+            dirs.clear()
+            for file in files:
+                data_files.append((package_dir, [os.path.join(root,file)]))
+
+add_data_files("/data/tests/poet", "sawtooth_poet_tests")
+add_data_files("/data/tests/poet/poet_liveness_data",
+    "sawtooth_poet_tests/poet_liveness_data")
+
+data_files.append(('/data/tests/poet', ['../simulator/packaging/simulator_rk_pub.pem']))
 
 setup(
     name='sawtooth-poet-tests',
