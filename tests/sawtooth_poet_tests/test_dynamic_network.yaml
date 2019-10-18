@@ -20,8 +20,8 @@ services:
   test-dynamic-network:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
     command: nose2-3

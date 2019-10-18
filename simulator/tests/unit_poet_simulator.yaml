@@ -19,8 +19,8 @@ services:
 
   unit-poet-simulator:
     build:
-      context: .
-      dockerfile: poet-simulator-tests.dockerfile
+      context: ../..
+      dockerfile: simulator/tests/poet-simulator-tests.dockerfile
     image: poet-simulator-tests$INSTALL_TYPE:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet

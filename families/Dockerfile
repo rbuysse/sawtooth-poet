@@ -33,10 +33,14 @@ RUN apt-get install -y -q --allow-downgrades \
     python3-cryptography>=1.7.1 \
     python3-grpcio \
     python3-grpcio-tools \
-    python3-protobuf \
-    python3-sawtooth-sdk
+    python3-protobuf
 
 ENV PATH=$PATH:/project/sawtooth-poet/bin
+
+COPY python3-sawtooth-sdk*.deb /tmp
+
+RUN dpkg -i /tmp/python3-sawtooth-sdk*.deb || true \
+ && apt-get -f -y install
 
 WORKDIR /project/sawtooth-poet
 

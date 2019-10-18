@@ -32,8 +32,8 @@ services:
   test-poet-liveness-bumper:
     image: sawtooth-poet-tests-bumper:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile-bumper
+      context: ../..
+      dockerfile: tests/Dockerfile-bumper
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
     command: nose2-3

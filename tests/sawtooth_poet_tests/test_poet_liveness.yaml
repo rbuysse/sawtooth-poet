@@ -32,8 +32,8 @@ services:
   test-poet-liveness:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
     command: nose2-3
@@ -48,8 +48,8 @@ services:
   intkey-workload:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 8008
     command: "bash -c \"\
@@ -61,8 +61,8 @@ services:
   smallbank-workload:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 8008
     command: "bash -c \"\
@@ -75,8 +75,8 @@ services:
   validator-0:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-0:/etc/sawtooth/keys
@@ -118,8 +118,8 @@ services:
   validator-1:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-1:/etc/sawtooth/keys
@@ -139,8 +139,8 @@ services:
   validator-2:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-2:/etc/sawtooth/keys
@@ -160,8 +160,8 @@ services:
   validator-3:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-3:/etc/sawtooth/keys
@@ -181,8 +181,8 @@ services:
   validator-4:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet
       - sawtooth-keys-4:/etc/sawtooth/keys
@@ -262,8 +262,8 @@ services:
   rest-api-0:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 4004
       - 8008
@@ -273,8 +273,8 @@ services:
   rest-api-1:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 4004
       - 8008
@@ -284,8 +284,8 @@ services:
   rest-api-2:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 4004
       - 8008
@@ -295,8 +295,8 @@ services:
   rest-api-3:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 4004
       - 8008
@@ -306,8 +306,8 @@ services:
   rest-api-4:
     image: sawtooth-poet-tests:$ISOLATION_ID
     build:
-      context: .
-      dockerfile: ../Dockerfile
+      context: ../..
+      dockerfile: tests/Dockerfile
     expose:
       - 4004
       - 8008

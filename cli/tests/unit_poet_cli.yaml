@@ -19,8 +19,8 @@ services:
 
   unit-poet-cli:
     build:
-      context: .
-      dockerfile: poet-cli-tests.dockerfile
+      context: ../..
+      dockerfile: cli/tests/poet-cli-tests.dockerfile
     image: poet-cli-tests:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet

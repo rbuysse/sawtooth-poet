@@ -34,8 +34,8 @@ services:
 
   test-tp-validator-registry:
     build:
-      context: .
-      dockerfile: tp-validator-registry-tests.dockerfile
+      context: ../../
+      dockerfile: families/tests/tp-validator-registry-tests.dockerfile
     image: tp-validator-registry-tests$INSTALL_TYPE:$ISOLATION_ID
     volumes:
       - $SAWTOOTH_POET:/project/sawtooth-poet

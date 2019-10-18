@@ -32,7 +32,6 @@ RUN apt-get install -y -q --allow-downgrades \
     python3-lmdb \
     python3-protobuf \
     python3-requests \
-    python3-sawtooth-sdk \
     python3-toml
 
 RUN apt-get install -y -q \
@@ -46,3 +45,8 @@ RUN pip3 install \
 ENV PATH=$PATH:/project/sawtooth-poet/bin
 
 WORKDIR /project/sawtooth-poet
+
+COPY python3-sawtooth-sdk*.deb /tmp
+
+RUN dpkg -i /tmp/python3-sawtooth-sdk*.deb || true \
+ && apt-get -f -y install

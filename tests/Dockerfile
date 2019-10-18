@@ -43,7 +43,6 @@ RUN echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/nightly bionic univers
     python3-pip \
     python3-protobuf \
     python3-requests \
-    python3-sawtooth-sdk \
     python3-toml \
     python3-yaml \
     software-properties-common
@@ -62,3 +61,8 @@ RUN apt-get update && apt-get install -y -q \
 ENV PATH=$PATH:/project/sawtooth-poet/bin
 
 WORKDIR /project/sawtooth-poet
+
+COPY python3-sawtooth-sdk*.deb /tmp
+
+RUN dpkg -i /tmp/python3-sawtooth-sdk*.deb || true \
+ && apt-get -f -y install
